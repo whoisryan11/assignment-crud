@@ -55,9 +55,16 @@ table{
   border-collapse: collapse;
   
 }
+.tableHeader td {
+  text-align: center;
+  font-weight: bold;
+}
+.newPost td{
+  text-align: center;
+}
 
 td{
-  text-align: center;
+  text-align: left;
   height: 3em;
 }
 .userId{
@@ -103,8 +110,4 @@ button{
 
 .delete{
   background-color: rgb(214, 18, 18);
-}
-
-.tableHeader td{
-  font-weight: bold;
 }

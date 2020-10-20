@@ -17,6 +17,9 @@ class App extends Component {
     super(props);
     ApiService.getAllPosts().then(res => {
       const posts = res.data;
+      for(let post of posts){
+        post.editing = false;
+      }
       const aI = posts.length + 1;
       this.setState({posts: posts, autoIncrement: aI});
       console.log(this.state);
@@ -25,11 +28,18 @@ class App extends Component {
 
   updatePost(index){
     const post = {...this.state.posts[index]};
+    post.editing = false;
     const id = post.id;
-    ApiService.updatePost(id, post).then(res => {
-      alert("User Updated !")
-      console.log(res);
-    });
+    const posts = [...this.state.posts];
+    posts[index] = post; 
+    this.setState({posts: posts});
+    if(id <= 100){
+      ApiService.updatePost(id, post).then(res => {
+        alert("User Updated !")
+        console.log(res);
+      });
+    }
+    
   }
 
   deletePost(index) {
@@ -49,7 +59,8 @@ class App extends Component {
       userId: this.state.newUserId,
       id: id,
       title: this.state.newTitle,
-      body: this.state.newBody
+      body: this.state.newBody,
+      edting: false
     };
     id += 1;
     const posts = [...this.state.posts];
@@ -89,7 +100,6 @@ class App extends Component {
     posts[index] = post; 
     this.setState({posts: posts});
   }
-  
 
   bindTitle = (event, index) => {
     const post = {...this.state.posts[index]};
@@ -121,7 +131,14 @@ class App extends Component {
     const newBody = event.target.value;
     this.setState({newBody: newBody});
   }
-  
+    
+  editRow(index) {
+    const post = {...this.state.posts[index]}
+    post.editing = true;
+    const posts = [...this.state.posts];
+    posts[index] = post; 
+    this.setState({posts: posts});
+  }
 
   render(){
     let posts = null;
@@ -157,7 +174,9 @@ class App extends Component {
                 changeTitle={(event)=>this.bindTitle(event, index)}
                 changeBody={(event)=>this.bindBody(event, index)}
                 update={()=>this.updatePost(index)}
-                delete={()=>this.deletePost(index)}/>
+                delete={()=>this.deletePost(index)}
+                editing={post.editing}
+                editClick={()=>this.editRow(index)}/>
             )}
           </tbody></table></div>));
         return (
