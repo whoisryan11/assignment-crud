@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Route, NavLink, Switch} from 'react-router-dom';
 import './App.css';
 import ApiService from './services/api.service';
 import Post from './components/post.component';
@@ -148,9 +149,11 @@ class App extends Component {
         posts = null;
         return (
           <div className="header">
-            <button onClick={()=>this.showPosts()}>Show Posts</button>
-            <button onClick={()=>this.createPosts()}>Create Post</button>
+            <button onClick={()=>this.showPosts()}><NavLink to="/posts/" exact>Show Posts</NavLink></button>
+            <button onClick={()=>this.createPosts()}><NavLink to="/newPost/" exact>Create Post</NavLink></button>
+            <Switch><Route path="/posts"/><Route path="/newPost"/></Switch>
           </div>
+          
         );
       case 'posts':
         posts = ((<div className="posts">
@@ -182,8 +185,8 @@ class App extends Component {
         return (
           <div>
             <div className="header">
-              <button onClick={()=>this.hidePosts()}>Hide Posts</button>
-              <button onClick={()=>this.createPosts()}>Create Post</button>
+              <button onClick={()=>this.hidePosts()}><NavLink to="/app/" exact>Hide Posts</NavLink></button>
+              <button onClick={()=>this.createPosts()}><NavLink to="/newPost/" exact>Create Post</NavLink></button>
             </div>
             {posts}
           </div>);
@@ -192,8 +195,8 @@ class App extends Component {
         return (
           <div>
             <div className="header">
-              <button onClick={()=>this.showPosts()}>Show Posts</button>
-              <button onClick={()=>this.hidePosts()}>Go Back</button>
+              <button onClick={()=>this.showPosts()}><NavLink to="/posts/" exact>Show Posts</NavLink></button>
+              <button onClick={()=>this.hidePosts()}><NavLink to="/app/" exact>Go Back</NavLink></button>
             </div>
             <NewPost 
               userId={this.state.newUserId}

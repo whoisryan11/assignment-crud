@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {NavLink} from 'react-router-dom';
 const newPost = (props) => {
     return (
         <div className="newPost">
@@ -17,7 +17,7 @@ const newPost = (props) => {
                 <td><textarea id ="body" type = "text" value={props.body} onChange={props.changeBody} /></td>
             </tr>
             </tbody></table>
-            <button id="submit" onClick={props.newPost}>Submit</button>
+            <button id="submit" onClick={props.newPost}><NavLink to="/app/" exact>Submit</NavLink></button>
         </div>
         
     )
